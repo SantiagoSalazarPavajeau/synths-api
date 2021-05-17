@@ -1,0 +1,13 @@
+package com.ssp.synths;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SynthsApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SynthsApplication.class, args);
+	}
+
+}
