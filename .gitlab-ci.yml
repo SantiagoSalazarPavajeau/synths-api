@@ -1,0 +1,32 @@
+image: openjdk:11
+
+stages:
+  - build
+  - test
+
+build:
+  stage: build
+  script:
+    ./gradlew assemble
+  artifacts:
+    paths:
+      - build/libs/*.jar
+test:
+  stage: test
+  script:
+    ./gradlew test
+  artifacts:
+    paths:
+      - build/test-results/test/TEST*.xml
+
+codeCoverage:
+  image: adoptopenjdk:11
+  needs:
+    - build
+  stage: test
+  script:
+    ./gradlew jacocoTestCoverageVerification
+  allow_failure: true
+  artifacts:
+    paths:
+      - build/reports/jacoco/**
