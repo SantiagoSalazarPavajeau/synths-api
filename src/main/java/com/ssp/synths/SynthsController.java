@@ -46,6 +46,17 @@ public class SynthsController {
         return ResponseEntity.ok(synth);
     }
 
+    @PatchMapping("/api/synths/{inventoryId}")
+    public ResponseEntity<Synth> updateAuto(@PathVariable String inventoryId,
+                                                 @RequestBody UpdateSynthRequest update) {
+        Synth synth = synthsService.updateSynth(inventoryId, update.getYear(), update.getName());
+
+        synth.setYear(Integer.parseInt(update.getYear()));
+        synth.setName(update.getName());
+
+        return ResponseEntity.ok(synth);
+    }
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void invalidAuto(InvalidSynthException e){

@@ -17,4 +17,8 @@ public class SynthsService {
     public Synth getSynth(String inventoryId){
         return null;
     }
+
+    public Synth updateSynth(String inventoryId, String year, String name) {
+        return null;
+    }
 }
