@@ -28,7 +28,7 @@ public class SynthsService {
     }
 
     public Synth getSynth(String inventoryId){
-        return null;
+        return synthRepository.findByInventoryId(inventoryId).orElse(null);
     }
 
     public Synth updateSynth(String inventoryId, String year, String name) {

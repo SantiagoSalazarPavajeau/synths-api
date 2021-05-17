@@ -12,6 +12,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -72,8 +73,15 @@ public class SynthServiceTest {
         assertThat(synth1.getInventoryId()).isEqualTo(synth1.getInventoryId());
     }
 
-
-
+    @Test
+    void getSynth_acceptsInventoryId_returnsSynth() {
+        Synth synth = new Synth(1970, "Moog Minimoog", "analog", "monophonic", "ABC1");
+        when(synthRepository.findByInventoryId(anyString()))
+                .thenReturn(java.util.Optional.of(synth));
+        Synth synth1 = synthService.getSynth(synth.getInventoryId());
+        assertThat(synth1).isNotNull();
+        assertThat(synth1.getInventoryId()).isEqualTo(synth1.getInventoryId());
+    }
 
 
 
