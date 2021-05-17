@@ -43,5 +43,11 @@ public class SynthsService {
     }
 
     public void deleteSynth(String inventoryId){
+        Optional<Synth> optionalSynth = synthRepository.findByInventoryId(inventoryId);
+        if(optionalSynth.isPresent()){
+            synthRepository.delete(optionalSynth.get());
+        }else{
+            throw new SynthNotFoundException();
+        }
     }
 }

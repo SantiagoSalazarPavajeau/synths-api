@@ -83,6 +83,14 @@ public class SynthServiceTest {
         assertThat(synth1.getInventoryId()).isEqualTo(synth1.getInventoryId());
     }
 
+    @Test
+    void deleteSynth_acceptsInventoryId_returnsVoid() {
+        Synth synth = new Synth(1970, "Moog Minimoog", "analog", "monophonic", "ABC1");
+        when(synthRepository.findByInventoryId(anyString()))
+                .thenReturn(java.util.Optional.of(synth));
+        synthService.deleteSynth(synth.getInventoryId());
+        verify(synthRepository).delete(any(Synth.class));
+    }
 
 
 }
