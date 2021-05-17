@@ -42,7 +42,7 @@ public class SynthServiceTest {
     void getSynth_search_returnsList() {
         Synth synth = new Synth(1970, "Moog Minimoog", "analog", "monophonic", "ABC1");
         synth.setPolyphony("16-notes");
-        when(synthRepository.findByContainsSignalProcessingAndPolyphonyContains(anyString(), anyString()))
+        when(synthRepository.findBySignalProcessingContainsAndPolyphonyContains(anyString(), anyString()))
                 .thenReturn(Arrays.asList(synth));
         SynthsList autoList = synthService.getSynths("analog", "16-notes");
         assertThat(autoList).isNotNull();

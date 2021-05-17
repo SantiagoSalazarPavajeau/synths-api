@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface SynthRepository extends JpaRepository<Synth, Long> {
-    List<Synth> findByContainsSignalProcessingAndPolyphonyContains(String signalProcessing, String polyphony);
+    List<Synth> findBySignalProcessingContainsAndPolyphonyContains(String signalProcessing, String polyphony);
 
     Optional<Synth> findByInventoryId(String inventoryId);
 }

@@ -1,12 +1,25 @@
 package com.ssp.synths;
 
-public class Synth {
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "synths")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class Synth {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private int year;
     private String name;
     private String signalProcessing;
     private String polyphony;
+    @Column(unique = true)
     private String inventoryId;
+
+    public Synth(){
+
+    }
 
     public Synth(int year, String name, String signalProcessing, String polyphony, String inventoryId) {
         this.year = year;
