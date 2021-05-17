@@ -13,4 +13,8 @@ public class SynthsService {
     public Synth addSynth(Synth synth){
         return null;
     }
+
+    public Synth getSynth(String inventoryId){
+        return null;
+    }
 }

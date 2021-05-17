@@ -35,6 +35,13 @@ public class SynthsController {
         return synthsService.addSynth(synth);
     }
 
+    @GetMapping("/api/synths/{inventoryId}")
+    public ResponseEntity<Synth> getAuto(@PathVariable String inventoryId) {
+        Synth synth = synthsService.getSynth(inventoryId);
+
+        return ResponseEntity.ok(synth);
+    }
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void invalidAuto(InvalidSynthException e){

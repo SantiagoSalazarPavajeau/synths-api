@@ -92,4 +92,16 @@ public class SynthsControllerTests {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    void getSynth_withItemId_returnsSynth() throws Exception {
+        Synth synth = new Synth(1970, "Moog Minimoog", "analog", "monophonic", "ABC1");
+
+        when(synthsService.getSynth(anyString())).thenReturn(synth);
+
+        mockMvc.perform(get("/api/synths/"+synth.getInventoryId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("inventoryId").value(synth.getInventoryId()));
+    }
+
+
 }
