@@ -1,6 +1,7 @@
 package com.ssp.synths;
 
 import java.util.List;
+import java.util.Optional;
 
 public class SynthsService {
 
@@ -31,6 +32,13 @@ public class SynthsService {
     }
 
     public Synth updateSynth(String inventoryId, String year, String name) {
+        Optional<Synth> optionalSynth =  synthRepository.findByInventoryId(inventoryId);
+
+        if(optionalSynth.isPresent()){
+            optionalSynth.get().setYear(Integer.parseInt(year));
+            optionalSynth.get().setName(name);
+            return synthRepository.save(optionalSynth.get());
+        }
         return null;
     }
 

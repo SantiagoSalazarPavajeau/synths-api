@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -57,6 +58,21 @@ public class SynthServiceTest {
         assertThat(synth1).isNotNull();
         assertThat(synth1.getName()).isEqualTo("Moog Minimoog");
     }
+
+    @Test
+    void updateSynth_acceptsSynth_returnsSynth() {
+        Synth synth = new Synth(1970, "Moog Minimoog", "analog", "monophonic", "ABC1");
+        synth.setPolyphony("16-notes");
+        when(synthRepository.findByInventoryId(anyString()))
+                .thenReturn(java.util.Optional.of(synth));
+        when(synthRepository.save(any(Synth.class)))
+                .thenReturn(synth);
+        Synth synth1 = synthService.updateSynth(synth.getInventoryId(), "1980", "Minimoog");
+        assertThat(synth1).isNotNull();
+        assertThat(synth1.getInventoryId()).isEqualTo(synth1.getInventoryId());
+    }
+
+
 
 
 
