@@ -128,6 +128,12 @@ public class SynthsControllerTests {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    void deleteSynth_withInventoryId_notExists_returnsNoContent() throws Exception {
+        doThrow(new SynthNotFoundException()).when(synthsService).deleteSynth(anyString());
 
+        mockMvc.perform(delete("/api/synths/A"))
+                .andExpect(status().isNoContent());
+    }
 
 }

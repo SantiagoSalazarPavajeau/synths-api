@@ -56,6 +56,16 @@ public class SynthsController {
         return ResponseEntity.ok(synth);
     }
 
+    @DeleteMapping("/api/synths/{inventoryId}")
+    public ResponseEntity deleteAutoByVin(@PathVariable String inventoryId){
+        try{
+            synthsService.deleteSynth(inventoryId);
+        } catch (SynthNotFoundException ex){
+            return ResponseEntity.noContent().build();
+        }
+        return null;
+    }
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void invalidAuto(InvalidSynthException e){

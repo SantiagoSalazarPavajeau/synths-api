@@ -21,4 +21,7 @@ public class SynthsService {
     public Synth updateSynth(String inventoryId, String year, String name) {
         return null;
     }
+
+    public void deleteSynth(String inventoryId){
+    }
 }
