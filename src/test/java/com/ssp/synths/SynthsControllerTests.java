@@ -72,12 +72,24 @@ public class SynthsControllerTests {
 
         when(synthsService.addSynth(any(Synth.class))).thenReturn(synth);
 
-        mockMvc.perform(post("/api/synth")
+        mockMvc.perform(post("/api/synths")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(synth)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Moog Minimoog"));
+    }
+
+    @Test
+    void addSynth_invalid_returnsInvalidSynthException() throws Exception {
+
+        when(synthsService.addSynth(any(Synth.class))).thenThrow(InvalidSynthException.class);
+        String jsonNoYear = "{\"name\":\"Moog Minimoog\",\"signalProcessing\":\"analog\",\"polyphony\":\"monophonic\",\"inventoryId\":\"ABC1\"}";
+        mockMvc.perform(post("/api/synths")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonNoYear))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
     }
 
 }

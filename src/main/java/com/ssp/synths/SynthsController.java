@@ -1,5 +1,6 @@
 package com.ssp.synths;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,9 +30,15 @@ public class SynthsController {
         return ResponseEntity.ok(searchResults);
     }
 
-    @PostMapping("/api/synth")
+    @PostMapping("/api/synths")
     public Synth addSynth(@RequestBody Synth synth){
         return synthsService.addSynth(synth);
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public void invalidAuto(InvalidSynthException e){
+
     }
 
 
