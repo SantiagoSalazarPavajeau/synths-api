@@ -122,4 +122,12 @@ public class SynthsControllerTests {
                 .andExpect(jsonPath("name").value("Minimoog"));
     }
 
+    @Test
+    void updateSynth_noBody_returnsBadRequest() throws Exception {
+        mockMvc.perform(patch("/api/synths/A"))
+                .andExpect(status().isBadRequest());
+    }
+
+
+
 }

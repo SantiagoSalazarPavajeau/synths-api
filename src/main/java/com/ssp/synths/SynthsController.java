@@ -53,7 +53,6 @@ public class SynthsController {
 
         synth.setYear(Integer.parseInt(update.getYear()));
         synth.setName(update.getName());
-
         return ResponseEntity.ok(synth);
     }
 
