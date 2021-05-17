@@ -1,9 +1,11 @@
 package com.ssp.synths;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -14,6 +16,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -27,6 +30,7 @@ public class SynthsControllerTests {
     @MockBean
     SynthsService synthsService;
 
+    ObjectMapper mapper = new ObjectMapper();
 
     @Test
     void getSynths_noParameters_returnsSynthsList() throws Exception {
@@ -61,4 +65,19 @@ public class SynthsControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.synths", hasSize(1)));
     }
+
+    @Test
+    void addSynth_valid_returnsSynth() throws Exception {
+        Synth synth = new Synth(1970, "Moog Minimoog", "analog", "monophonic", "ABC1");
+
+        when(synthsService.addSynth(any(Synth.class))).thenReturn(synth);
+
+        mockMvc.perform(post("/api/synth")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(synth)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Moog Minimoog"));
+    }
+
 }

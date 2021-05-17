@@ -9,4 +9,8 @@ public class SynthsService {
     public SynthsList getSynths( String signalProcessing, String polyphony){
         return null;
     }
+
+    public Synth addSynth(Synth synth){
+        return null;
+    }
 }
