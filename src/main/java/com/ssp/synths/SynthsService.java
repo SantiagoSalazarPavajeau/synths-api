@@ -1,5 +1,7 @@
 package com.ssp.synths;
 
+import java.util.List;
+
 public class SynthsService {
 
     SynthRepository synthRepository;
@@ -13,6 +15,10 @@ public class SynthsService {
     }
 
     public SynthsList getSynths( String signalProcessing, String polyphony){
+        List<Synth> synths =  synthRepository.findByContainsSignalProcessingAndPolyphonyContains(signalProcessing, polyphony);
+        if(!synths.isEmpty()){
+            return new SynthsList(synths);
+        }
         return null;
     }
 

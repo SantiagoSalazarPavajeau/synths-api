@@ -7,4 +7,5 @@ import java.util.List;
 
 @Repository
 public interface SynthRepository extends JpaRepository<Synth, Long> {
+    List<Synth> findByContainsSignalProcessingAndPolyphonyContains(String signalProcessing, String polyphony);
 }

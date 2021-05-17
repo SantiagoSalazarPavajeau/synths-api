@@ -9,6 +9,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,6 +35,21 @@ public class SynthServiceTest {
         assertThat(list).isNotNull();
         assertThat(list.isEmpty()).isFalse();
     }
+
+    @Test
+    void getSynth_search_returnsList() {
+        Synth synth = new Synth(1970, "Moog Minimoog", "analog", "monophonic", "ABC1");
+        synth.setPolyphony("16-notes");
+        when(synthRepository.findByContainsSignalProcessingAndPolyphonyContains(anyString(), anyString()))
+                .thenReturn(Arrays.asList(synth));
+        SynthsList autoList = synthService.getSynths("analog", "16-notes");
+        assertThat(autoList).isNotNull();
+        assertThat(autoList.isEmpty()).isFalse();
+    }
+
+
+
+
 
 
 }
