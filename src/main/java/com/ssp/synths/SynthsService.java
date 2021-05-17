@@ -2,8 +2,14 @@ package com.ssp.synths;
 
 public class SynthsService {
 
+    SynthRepository synthRepository;
+
+    SynthsService(SynthRepository synthRepository){
+        this.synthRepository = synthRepository;
+    }
+
     public SynthsList getSynths( ){
-        return null;
+        return new SynthsList(synthRepository.findAll());
     }
 
     public SynthsList getSynths( String signalProcessing, String polyphony){
