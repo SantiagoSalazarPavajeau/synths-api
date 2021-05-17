@@ -37,8 +37,12 @@ public class SynthsController {
 
     @GetMapping("/api/synths/{inventoryId}")
     public ResponseEntity<Synth> getAuto(@PathVariable String inventoryId) {
-        Synth synth = synthsService.getSynth(inventoryId);
-
+        Synth synth;
+        try{
+            synth = synthsService.getSynth(inventoryId);
+        }catch (SynthNotFoundException e){
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok(synth);
     }
 

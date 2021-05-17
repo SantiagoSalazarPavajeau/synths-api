@@ -103,5 +103,12 @@ public class SynthsControllerTests {
                 .andExpect(jsonPath("inventoryId").value(synth.getInventoryId()));
     }
 
+    @Test
+    void getSynth_nonExistingItemId_returnsSynthNotFoundException() throws Exception {
+        when(synthsService.getSynth(anyString())).thenThrow(SynthNotFoundException.class);
+
+        mockMvc.perform(get("/api/synths/A"))
+                .andExpect(status().isNoContent());
+    }
 
 }
