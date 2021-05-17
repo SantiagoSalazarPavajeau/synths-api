@@ -23,7 +23,7 @@ public class SynthsService {
     }
 
     public Synth addSynth(Synth synth){
-        return null;
+        return synthRepository.save(synth);
     }
 
     public Synth getSynth(String inventoryId){

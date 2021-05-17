@@ -47,7 +47,16 @@ public class SynthServiceTest {
         assertThat(autoList.isEmpty()).isFalse();
     }
 
-
+    @Test
+    void addSynth_acceptsSynth_returnsSynth() {
+        Synth synth = new Synth(1970, "Moog Minimoog", "analog", "monophonic", "ABC1");
+        synth.setPolyphony("16-notes");
+        when(synthRepository.save(any(Synth.class)))
+                .thenReturn(synth);
+        Synth synth1 = synthService.addSynth(synth);
+        assertThat(synth1).isNotNull();
+        assertThat(synth1.getName()).isEqualTo("Moog Minimoog");
+    }
 
 
 
