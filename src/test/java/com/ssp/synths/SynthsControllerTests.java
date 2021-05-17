@@ -136,4 +136,11 @@ public class SynthsControllerTests {
                 .andExpect(status().isNoContent());
     }
 
+    @Test
+    void deleteSynth_withInventoryId_exists_returnsAccepted202() throws Exception {
+        mockMvc.perform(delete("/api/synths/ABC1"))
+                .andExpect(status().isAccepted());
+        verify(synthsService).deleteSynth(anyString());
+    }
+
 }

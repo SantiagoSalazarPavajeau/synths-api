@@ -63,7 +63,7 @@ public class SynthsController {
         } catch (SynthNotFoundException ex){
             return ResponseEntity.noContent().build();
         }
-        return null;
+        return ResponseEntity.accepted().build();
     }
 
     @ExceptionHandler
