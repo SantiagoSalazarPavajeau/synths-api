@@ -1,0 +1,236 @@
+openapi: 3.0.1
+info:
+  title: Swagger synthesizers
+  description: 'This is a sample synthesizers API'
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://localhost:8080/api/synths
+  - url: http://localhost:8080/api/synths
+tags:
+  - name: Synthesizers
+    description: Everything about synthesizers
+    externalDocs:
+      description: Find out more
+      url: http://localhost:8080/api/synths
+paths:
+  /synthezisers:
+    post:
+      tags:
+        - synthesizers
+      summary: Create new
+      requestBody:
+        description: Synthesizer object that needs to be added to the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Synthesizer'
+        required: true
+      responses:
+        '400':
+          description: Error bad request
+    get:
+      tags:
+        - synthesizers
+      summary: Get all
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No synthesizers found by that inventoryId
+  /synthesizer?signalProcessing={signalProcessing}}:
+    get:
+      tags:
+        - synthesizers
+      summary: Get all by analog or digital
+      parameters:
+        - name: analog
+          in: path
+          description: return all analog or digital
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Synthesizer'
+        '204':
+          description: No synthesizers found by parameters
+  /synthesizer?polyphony={polyphony}}:
+    get:
+      tags:
+        - synthesizers
+      summary: Get all by polyphony
+      parameters:
+        - name: polyphony
+          in: path
+          description: return all of certain polyphony (1-note, 4-note, 8-note, 16-note)
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Synthesizer'
+        '204':
+          description: No synthesizer found by that parameter
+  /synthesizer?signalProcessing={signalProcessing}?polyphony={polyphony}:
+    get:
+      tags:
+        - synthesizers
+      summary: Get all by signalProcessing and polyphony
+      parameters:
+        - name: signalProcessing
+          in: path
+          description: return all of certain signalProcessing
+          required: true
+          schema:
+            type: string
+        - name: polyphony
+          in: path
+          description: return all of certain polyphony
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Synthesizer'
+        '204':
+          description: No synthesizer found by those parameters
+  /autos/{inventoryId}:
+    get:
+      tags:
+        - synthesizers
+      summary: Get one
+      parameters:
+        - name: inventoryId
+          in: path
+          description: inventoryId of synthesizer to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Synthesizer'
+        '204':
+          description: No synthesizer found by that inventoryId
+    patch:
+      tags:
+        - synthesizers
+      summary: Edit
+      parameters:
+        - name: inventoryId
+          in: path
+          description: inventoryId of synthesizer that needs to be updated
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Synthesizer'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Synthesizer'
+        '204':
+          description: No synthesizer found by that inventoryId
+        '400':
+          description: Bad request (no payload, no changes, already done)
+    delete:
+      tags:
+        - synthesizers
+      summary: Delete
+      parameters:
+        - name: inventoryId
+          in: path
+          description: inventoryId of synthesizer that needs to be updated
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Synthesizer'
+        '202':
+          description: Accepted
+        '204':
+          description: No synthesizer found by that inventoryId
+components:
+  schemas:
+    Synthesizer:
+      description: a single synthesizer
+      type: object
+      properties:
+        year:
+          type: integer
+          description: Model year
+          example: 1985
+        name:
+          type: string
+          description: Manufacturer and model
+          example: Korg minilogue xd
+        signalProcessing:
+          type: string
+          description: analog or digital synthesizer
+          example: analog or digital
+        polyphony:
+          type: string
+          description: Amount of concurrent notes playable
+          example: 8-notes
+        inventoryId:
+          type: string
+          description: product identification reference
+          example: 7F03Z01025
+      required:
+        - year
+        - name
+        - signalProcessing
+        - polyphony
+        - inventoryId
+    synth-list:
+      description: List of synthesizers
+      type: object
+      properties:
+        Synthesizer:
+          type: array
+          items:
+            $ref: '#/components/schemas/Synthesizer'
+    update-synth:
+      description: Updatable fields of a synth
+      type: object
+      properties:
+        signalProcessing:
+          type: string
+        polyphony:
+          type: string
+    synth-not-found-exception:
+      type: object
+      properties:
+        message:
+          type: string
